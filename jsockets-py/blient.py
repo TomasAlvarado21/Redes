@@ -1,29 +1,50 @@
 import jsockets
-import sys
+import sys, threading
 import time
 import socket
+#import subprocess
+#import matplotlib.pyplot as plt
 
-server = sys.argv[3]
-port = sys.argv[4]
+#paquetes = [100, 500, 1000, 2000, 5000, 9999]
+#
+#resultados = []
+#for tamano in paquetes:
+#    comando = ["python3", "cliente.py", str(tamano), "Notes_230406_154910.pdf", "anakena.dcc.uchile.cl", "1818"]
+#    resultado = subprocess.run(comando, capture_output=True, text=True, timeout=180)
+#    if resultado.returncode == 0:
+#        ancho_banda = float(resultado.stdout.strip())
+#        resultados.append(ancho_banda)
+#    else:
+#        print(f"Error: {resultado.stderr}")
+#        resultados.append(None)
+#
+#plt.plot(paquetes, resultados)
+#plt.xlabel("Tamaño de paquete")
+#plt.ylabel("Ancho de banda (MB/s)")
+#plt.title("Experimentos de tamaño de paquete")
+#plt.show()
+#
+#print("Recomendación:")
+#mejor_tamano = paquetes[resultados.index(max(resultados))]
+#print(f"Utilizar un tamaño de paquete de {mejor_tamano}")
+#
 
-#ahora tengo que CAMBIAR esto
-def main():
-    #ahora haremos que se ejecute 5 veces todo el programa
+argumentos = ['cliente.py', '5000', 'CRIPTOGRAFIA.pdf', 'anakena.dcc.uchile.cl', '1818']
 
-    conect = jsockets.socket_udp_connect(sys.argv[3], sys.argv[4])
+import matplotlib.pyplot as plt
+import numpy as np
+
+def experiment(packet_size):
+    argumentos = ['cliente.py', '5000', 'CRIPTOGRAFIA.pdf', 'anakena.dcc.uchile.cl', '1818']
+    conect = jsockets.socket_udp_connect(argumentos[3], argumentos[4])
 
     if conect is None:
         print('could not open socket')
         sys.exit(1)
 
-    if len(sys.argv) != 5:
 
-        print('Use: '+sys.argv[0]+' host port')
-
-        sys.exit(1)
-
-    archivo = sys.argv[2]
-    t_archivo = sys.argv[1]
+    archivo = argumentos[2]
+    t_archivo = packet_size
 
 
     # Envío del mensaje de inicio
@@ -42,7 +63,7 @@ def main():
             intentos += 1
             if intentos == 5:
                 print('no se logro hacer la coneccion')
-                sys.exit(1)
+                return 0
                 
             print('intento', intentos, 'fallido')
             conect.send(('C'+ str(t_archivo)).encode())
@@ -80,8 +101,7 @@ def main():
             intentos += 1
             if intentos == 5:
                 print('no se logro hacer la coneccion')
-                sys.exit(1)
-                break
+                return 0
             print('intento', intentos, 'fallido')
             conect.send(b'E')
 
@@ -92,5 +112,24 @@ def main():
 
     ancho_de_banda = (int(t_archivo) / tiempo_transcurrido) / (1024*1024)
     print("Ancho de banda: %.2f bytes/segundo" % ancho_de_banda)
+    return ancho_de_banda
 
-main()
+packet_sizes = [1, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 9999]
+
+bandwidths = []
+for packet_size in packet_sizes:
+    bandwidth = experiment(packet_size)
+    bandwidths.append(bandwidth)
+
+print(bandwidths)
+
+plt.plot(packet_sizes, bandwidths)
+plt.xlabel('Packet Size')
+plt.ylabel('Bandwidth (Mbps)')
+plt.title('Bandwidth vs Packet Size')
+
+max_bandwidth = max(bandwidths)
+plt.axvline(packet_sizes[bandwidths.index(max_bandwidth)], color='red', linestyle='--')
+
+plt.show()
+
