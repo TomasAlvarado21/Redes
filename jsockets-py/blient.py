@@ -110,26 +110,30 @@ def experiment(packet_size):
 
     # Cálculo del ancho de banda
 
-    ancho_de_banda = (int(t_archivo) / tiempo_transcurrido) / (1024*1024)
+    ancho_de_banda = (t_archivo/ tiempo_transcurrido) / (1024*1024)
     print("Ancho de banda: %.2f bytes/segundo" % ancho_de_banda)
     return ancho_de_banda
 
 packet_sizes = [1, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 9999]
+import random
+
+x_values = [] 
+for i in range(1, 10000, 100):
+
+    x_values.append(i)
 
 bandwidths = []
-for packet_size in packet_sizes:
+for packet_size in x_values:
+    print('Tamano de paquete: ', packet_size)
     bandwidth = experiment(packet_size)
     bandwidths.append(bandwidth)
 
 print(bandwidths)
 
-plt.plot(packet_sizes, bandwidths)
-plt.xlabel('Packet Size')
-plt.ylabel('Bandwidth (Mbps)')
-plt.title('Bandwidth vs Packet Size')
-
-max_bandwidth = max(bandwidths)
-plt.axvline(packet_sizes[bandwidths.index(max_bandwidth)], color='red', linestyle='--')
+plt.plot(x_values, bandwidths)
+plt.xlabel('Tamaño de paquete (bytes)')
+plt.ylabel('Ancho de banda (Mbps)')
+plt.title('Ancho de banda vs Tamaño de paquete')
 
 plt.show()
 
