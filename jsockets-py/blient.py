@@ -118,7 +118,7 @@ packet_sizes = [1, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 55
 import random
 
 x_values = [] 
-for i in range(1, 10000, 100):
+for i in range(1, 5000, 100):
 
     x_values.append(i)
 
