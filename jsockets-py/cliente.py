@@ -3,7 +3,7 @@ import sys
 import time
 import socket
 
-args = ['cliente.py', '1000', 'CRIPTOGRAFIA.pdf', 'anakena.dcc.uchile.cl', '1818']
+args = ['cliente.py', '1000', 'CRIPTOGRAFIA.pdf', 'localhost', '1717']
 server = args[3]
 port = args[4]
 #ahora tengo que CAMBIAR esto

@@ -56,6 +56,7 @@ if s is None:
 
 while True:
     conn, addr = s.recvfrom(1500)
+
     pid = os.fork()
     if pid == 0: # Este es el hijo
         s.close() # Cierro el socket que no voy a usar
