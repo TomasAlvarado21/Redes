@@ -2,32 +2,7 @@ import jsockets
 import sys, threading
 import time
 import socket
-#import subprocess
-#import matplotlib.pyplot as plt
 
-#paquetes = [100, 500, 1000, 2000, 5000, 9999]
-#
-#resultados = []
-#for tamano in paquetes:
-#    comando = ["python3", "cliente.py", str(tamano), "Notes_230406_154910.pdf", "anakena.dcc.uchile.cl", "1818"]
-#    resultado = subprocess.run(comando, capture_output=True, text=True, timeout=180)
-#    if resultado.returncode == 0:
-#        ancho_banda = float(resultado.stdout.strip())
-#        resultados.append(ancho_banda)
-#    else:
-#        print(f"Error: {resultado.stderr}")
-#        resultados.append(None)
-#
-#plt.plot(paquetes, resultados)
-#plt.xlabel("Tamaño de paquete")
-#plt.ylabel("Ancho de banda (MB/s)")
-#plt.title("Experimentos de tamaño de paquete")
-#plt.show()
-#
-#print("Recomendación:")
-#mejor_tamano = paquetes[resultados.index(max(resultados))]
-#print(f"Utilizar un tamaño de paquete de {mejor_tamano}")
-#
 
 argumentos = ['cliente.py', '5000', 'CRIPTOGRAFIA.pdf', 'anakena.dcc.uchile.cl', '1818']
 
