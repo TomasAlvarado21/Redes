@@ -15,7 +15,7 @@ def to_num(c1,c2,c3,c4):
 
 def to_char(num):
     if(num > 9999):
-        print(f"to_char: bad num: {num}");
+        print(f"to_char: bad num: {num}")
         return None
 
     return bytearray([ord('0')+num // 1000, ord('0')+num // 100%10, ord('0')+num // 10%10, ord('0')+num %10])
@@ -25,7 +25,7 @@ def from_seq(c1,c2):
 
 def to_seq(num):
     if(num > 99):
-        print(f"to_char: bad num: {num}");
+        print(f"to_char: bad num: {num}")
         return None
 
     return bytearray([ord('0')+num // 10%10, ord('0')+num %10])
@@ -114,7 +114,11 @@ class ClientThread(threading.Thread):
         # (en este caso solamente, que no hay estado)
 
 
-s = jsockets.socket_udp_bind(1819)
+s = jsockets.socket_udp_connect('anakena.dcc.uchile.cl', 1819)
+print(f'Conectado a anakena.dcc.uchile.cl:1819')
+
+# dame el codigo para correr el programa
+# python3 bws-sw.py
 if s is None:
     print('could not open socket')
     sys.exit(1)
