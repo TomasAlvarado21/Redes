@@ -26,7 +26,7 @@ def socket_bind(type, port):
         try:
             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             if(type == socket.SOCK_DGRAM):
-                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             s.bind(sa)
             if(type == socket.SOCK_STREAM):
                 s.listen(5)
